@@ -31,4 +31,4 @@ markocupic_contao_rsce_backend_info_image:
 
 ---
 This extension has been sponsored by [kda.studio](https://www.kda.studio/), 63067 Offenbach am Main, Germany
-<p align="left"><a href="https://www.kreadea.de" title="KREADEA"><img src="docs/kda.png" width="180"></a></p>
+<p align="left"><a href="https://www.kda.studio" title="kda.studio"><img src="docs/kda.png" width="180"></a></p>
