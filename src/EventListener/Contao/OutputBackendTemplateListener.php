@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Markocupic\ContaoRsceBackendInfoImage\EventListener\Contao;
 
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use MadeYourDay\RockSolidCustomElements\CustomElements;
 
@@ -25,11 +26,13 @@ use MadeYourDay\RockSolidCustomElements\CustomElements;
  */
 class OutputBackendTemplateListener
 {
+    private ContaoFramework $framework;
     private string $rsceBackendInfoImageMarkup;
     private string $addAfterRegexPattern;
 
-    public function __construct(string $rsceBackendInfoImageMarkup, string $addAfterRegexPattern)
+    public function __construct(ContaoFramework $framework, string $rsceBackendInfoImageMarkup, string $addAfterRegexPattern)
     {
+        $this->framework = $framework;
         $this->rsceBackendInfoImageMarkup = $rsceBackendInfoImageMarkup;
         $this->addAfterRegexPattern = $addAfterRegexPattern;
     }
@@ -40,22 +43,40 @@ class OutputBackendTemplateListener
             return $buffer;
         }
 
-        if (false !== strpos($buffer, 'id="pal_rsce_legend"')) {
-            if (preg_match('/<option value="rsce_([a-zA-Z0-9-_]+)" selected>/', $buffer, $matches)) {
-                $rsceElement = 'rsce_'.$matches[1];
-                $config = CustomElements::getConfigByType($rsceElement);
+        if (null !== ($rsceElement = $this->getRsceElementFromHtmlMarkup($buffer))) {
+            $customElementsAdapter = $this->framework->getAdapter(CustomElements::class);
 
-                if (null !== $config && \is_array($config) && isset($config['backendInfoImage']) && \strlen($config['backendInfoImage'])) {
-                    $search = $this->addAfterRegexPattern;
-                    $replacement = '$0'.$this->rsceBackendInfoImageMarkup;
+            $config = $customElementsAdapter->getConfigByType($rsceElement);
 
-                    $buffer = preg_replace($search, $replacement, $buffer);
-                    $buffer = str_replace('###IMAGE_SRC###', $config['backendInfoImage'], $buffer);
-                    $buffer = str_replace('###IMAGE_ALT###', $rsceElement, $buffer);
-                }
+            if (null !== $config && \is_array($config) && isset($config['backendInfoImage']) && \strlen($config['backendInfoImage'])) {
+                $imgSrc = $config['backendInfoImage'];
+
+                $buffer = $this->addPictureToHtmlMarkup($buffer, $rsceElement, $imgSrc, $this->addAfterRegexPattern, $this->rsceBackendInfoImageMarkup);
             }
         }
 
         return $buffer;
+    }
+
+    private function getRsceElementFromHtmlMarkup(string $buffer): ?string
+    {
+        if (false !== strpos($buffer, 'id="pal_rsce_legend"')) {
+            if (preg_match('/<option value="rsce_([a-zA-Z0-9-_]+)" selected>/', $buffer, $matches)) {
+                return 'rsce_'.$matches[1];
+            }
+        }
+
+        return null;
+    }
+
+    private function addPictureToHtmlMarkup(string $buffer, string $rsceElement, string $imgSrc, string $addAfterRegexPattern, string $rsceBackendInfoImageMarkup): string
+    {
+        $search = $addAfterRegexPattern;
+        $replacement = "$0$rsceBackendInfoImageMarkup";
+
+        $buffer = preg_replace($search, $replacement, $buffer);
+        $buffer = str_replace('###IMAGE_SRC###', $imgSrc, $buffer);
+
+        return str_replace('###IMAGE_ALT###', $rsceElement, $buffer);
     }
 }
