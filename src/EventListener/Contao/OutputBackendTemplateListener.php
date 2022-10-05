@@ -74,7 +74,7 @@ class OutputBackendTemplateListener
         $search = $addAfterRegexPattern;
         $replacement = "$0$rsceBackendInfoImageMarkup";
 
-        $buffer = preg_replace($search, $replacement, $buffer);
+        $buffer = preg_replace($search, $replacement, $buffer, 1);
         $buffer = str_replace('###IMAGE_SRC###', $imgSrc, $buffer);
 
         return str_replace('###IMAGE_ALT###', $rsceElement, $buffer);
