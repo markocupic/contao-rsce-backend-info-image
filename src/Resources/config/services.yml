@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            $rsceBackendInfoImageMarkup: '%markocupic_contao_rsce_backend_info_image.image_markup%'
+            $addAfterRegexPattern: '%markocupic_contao_rsce_backend_info_image.add_after_regex_pattern%'
+
+    Markocupic\ContaoRsceBackendInfoImage\:
+        resource: ../../
+        exclude: ../../{DependencyInjection,Resources,Model}

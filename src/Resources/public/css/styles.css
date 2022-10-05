@@ -1,0 +1,25 @@
+.rsce-backend-info-image-inner {
+    display: flex;
+    justify-content: flex-start;
+}
+
+@media only screen and (min-width: 767px) {
+    .rsce-backend-info-image-inner {
+        display: block;
+        position: relative;
+        min-height: 80px;
+    }
+
+    .rsce-backend-info-image-inner img {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.rsce-backend-info-image-inner img {
+    width: 250px;
+    height: auto;
+}
+
+
