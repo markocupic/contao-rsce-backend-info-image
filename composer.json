@@ -22,7 +22,7 @@
     "source": "https://github.com/markocupic/contao-rsce-backend-info-image"
   },
   "require": {
-    "php": "7.4 || ^8.0",
+    "php": "^7.4 || ^8.0",
     "contao/core-bundle": "^4.13 || ^5.0",
     "madeyourday/contao-rocksolid-custom-elements": "^2.2"
   },
