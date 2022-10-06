@@ -26,7 +26,7 @@ The image html markup and the "add_after_regex_pattern" can be customized in you
 # config/config.yml
 markocupic_contao_rsce_backend_info_image:
  image_markup: '<div class="long widget rsce-backend-info-image"><div class="rsce-backend-info-image-inner"><img src="###IMAGE_SRC###" alt="###IMAGE_ALT###"></div></div>'
- add_after_regex_pattern: '/<legend onclick="AjaxRequest\.toggleFieldset\(this,\'([a-z]+)_legend\',\'([a-zA-Z0-9-_]+)\'\)">([a-zA-Z0-9 ]+)<\/legend>/'
+ add_after_regex_pattern: /<legend onclick="AjaxRequest\.toggleFieldset\(this,\'([a-z]+)_legend\',\'([a-zA-Z0-9-_]+)\'\)">([a-zA-Z0-9 ]+)<\/legend>/
 ```
 
 ---
