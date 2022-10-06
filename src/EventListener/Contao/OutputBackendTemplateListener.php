@@ -60,7 +60,7 @@ class OutputBackendTemplateListener
 
     private function getRsceElementFromHtmlMarkup(string $buffer): ?string
     {
-        if (false !== strpos($buffer, 'id="pal_rsce_legend"')) {
+        if (false !== strpos($buffer, '<input type="hidden" name="rsce_data" value="">')) {
             if (preg_match('/<option value="rsce_([a-zA-Z0-9-_]+)" selected>/', $buffer, $matches)) {
                 return 'rsce_'.$matches[1];
             }
