@@ -49,6 +49,6 @@ class MarkocupicContaoRsceBackendInfoImageExtension extends Extension
 
         $container->setParameter($rootKey.'.image_markup', $config['image_markup']);
         $container->setParameter($rootKey.'.add_after_regex_pattern', $config['add_after_regex_pattern']);
-
+        $container->setParameter($rootKey.'.image_size', $config['image_size']);
     }
 }
